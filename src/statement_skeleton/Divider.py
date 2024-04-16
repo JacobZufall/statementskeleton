@@ -4,7 +4,7 @@ Divider.py
 
 from typing import override
 
-from Skeleton import Skeleton
+from .Skeleton import Skeleton
 
 
 class Divider:

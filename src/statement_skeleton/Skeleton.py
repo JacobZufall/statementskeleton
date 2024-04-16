@@ -2,7 +2,7 @@
 Skeleton.py
 """
 
-from typing import override, Any
+from typing import Any
 
 
 class Skeleton:
@@ -28,17 +28,16 @@ class Skeleton:
         "12": "December"
     }
 
-    def __init__(self, company: str, fs_name: str, date: str, fnstmt: dict[str:dict[str:dict[str:any]]],
+    def __init__(self, fnstmt: dict[str:dict[str:dict[str:any]]], company: str, fs_name: str, date: str,
                  min_width: int = 50, margin: int = 2, indent: int = 4) -> None:
         """
-
-        :param company:
-        :param fs_name:
-        :param date:
-        :param fnstmt:
-        :param min_width:
-        :param margin:
-        :param indent:
+        :param company: The name of the company.
+        :param fs_name: The name of the financial statement.
+        :param date: The date of the financial statement.
+        :param fnstmt: The financial statement.
+        :param min_width: The minimum width the financial statement will be in the output.
+        :param margin: How many spaces are on each side of headers.
+        :param indent: How many spaces are between an account name and the side.
         """
         self.company: str = company
         self.fs_name: str = fs_name
@@ -68,17 +67,6 @@ class Skeleton:
             for category, accounts in self.fnstmt.items():
                 for account, attributes in accounts.items():
                     self.add_title(account)
-
-        # self._find_subclasses()
-
-    # @classmethod
-    # def _find_subclasses(cls) -> None:
-    #     """
-    #     Finds all the classes that inherit from this class and appends them to a list.
-    #     :return: Nothing.
-    #     """
-    #     for sub in cls.__subclasses__():
-    #         cls.subclasses.append(sub.__name__)
 
     def _calc_width(self) -> None:
         """

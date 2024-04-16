@@ -4,7 +4,7 @@ Title.py
 
 from typing import override
 
-from Skeleton import Skeleton
+from .Skeleton import Skeleton
 
 
 class Title:
@@ -13,7 +13,7 @@ class Title:
 
         self.output: str = ""
 
-        self.space_needed: int = (self.skel.calc_width + self.skel.margin - len(title_name))
+        self.space_needed: int = (self.skel.calc_width + self.skel.margin - len(self.title_name))
 
         self.output = f"|{title_name}{" " * self.space_needed}|"
 
