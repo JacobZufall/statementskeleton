@@ -76,36 +76,7 @@ class Skeleton:
                 for account, attributes in accounts.items():
                     self.add_title(account)
 
-        self.implement(Divider(self, True))
-        self.implement(Header(self, "company"))
-        self.implement(Divider(self, False))
-        self.implement(Header(self, "fs"))
-        self.implement(Divider(self, False))
-        self.implement(Header(self, "date"))
-        self.implement(Divider(self, False))
-
-        for category, accounts in self.fnstmt.items():
-            self.implement(Title(self, (category.lower()).capitalize()))
-
-            total_bal: float | int = 0.0
-
-            for account, attributes in accounts.items():
-
-                if attributes["d/c"] == "debit":
-                    total_bal += attributes["bal"]
-
-                else:
-                    total_bal -= attributes["bal"]
-
-                self.implement(Account(self, account, attributes["bal"]))
-
-            self.implement(Total(
-                self,
-                f"Total {(category.lower()).capitalize()}",
-                abs(total_bal)
-            ))
-
-            self.implement(Divider(self, False))
+        self.define_output()
 
     def _calc_width(self) -> None:
         """
@@ -140,6 +111,44 @@ class Skeleton:
             raise KeyError(f"{type(element).__name__} isn't a valid element.")
 
         self.implemented_elements.append(element)
+
+    def define_output(self) -> None:
+        """
+        Defines the output. This is done in its own method, so it can be overridden.
+        :return: Nothing.
+        """
+        self.implement(Divider(self, True))
+        self.implement(Header(self, "company"))
+        self.implement(Divider(self, False))
+        self.implement(Header(self, "fs"))
+        self.implement(Divider(self, False))
+        self.implement(Header(self, "date"))
+        self.implement(Divider(self, False))
+
+        # The formatting below is pretty general and doesn't contain any subtotal lines for specific things, such as
+        # a total line for current assets and current liabilities. These should be taken care of in the subclasses.
+        for category, accounts in self.fnstmt.items():
+            self.implement(Title(self, (category.lower()).capitalize()))
+
+            total_bal: float | int = 0.0
+
+            for account, attributes in accounts.items():
+
+                if attributes["d/c"] == "debit":
+                    total_bal += attributes["bal"]
+
+                else:
+                    total_bal -= attributes["bal"]
+
+                self.implement(Account(self, account, attributes["bal"]))
+
+            self.implement(Total(
+                self,
+                f"Total {(category.lower()).capitalize()}",
+                abs(total_bal)
+            ))
+
+            self.implement(Divider(self, False))
 
     def print_output(self) -> None:
         for element in self.implemented_elements:
