@@ -117,6 +117,8 @@ class Skeleton:
         Defines the output. This is done in its own method, so it can be overridden.
         :return: Nothing.
         """
+        # Might need to split this off into a separate method that is then called here so that subclasses can inherit
+        # the heading easily without inheriting the body.
         self.implement(Divider(self, True))
         self.implement(Header(self, "company"))
         self.implement(Divider(self, False))
