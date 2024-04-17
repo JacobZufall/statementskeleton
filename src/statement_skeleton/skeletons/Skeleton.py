@@ -148,6 +148,8 @@ class Skeleton:
                 abs(total_bal)
             ))
 
+            # TODO: The last line implemented needs to have border=True. So this would need to happen on the very
+            #  last iteration of the for loop, but without running the line below.
             self.implement(Divider(self, False))
 
     def print_output(self) -> None:

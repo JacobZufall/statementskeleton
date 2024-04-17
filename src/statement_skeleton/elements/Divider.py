@@ -11,8 +11,6 @@ class Divider:
 
         self.output: str = ""
 
-        print(self.skel.calc_width)
-
         if border:
             self.output = f"+{"-" * (self.skel.calc_width + self.skel.margin)}+"
         else:
