@@ -2,14 +2,12 @@
 Header.py
 """
 
-from typing import override
-
-from .Skeleton import Skeleton
+from typing import override, Any
 
 
 class Header:
-    def __init__(self, skeleton_obj: Skeleton, header_type: str, header_name: str = "") -> None:
-        self.skel: Skeleton = skeleton_obj
+    def __init__(self, skeleton_obj: Any, header_type: str, header_name: str = "") -> None:
+        self.skel: Any = skeleton_obj
         self.output: str = ""
 
         self.header_name: str = ""

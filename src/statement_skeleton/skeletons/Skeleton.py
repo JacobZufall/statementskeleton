@@ -4,13 +4,20 @@ Skeleton.py
 
 from typing import Any
 
+from src.statement_skeleton.elements.Account import Account
+from src.statement_skeleton.elements.Divider import Divider
+from src.statement_skeleton.elements.Header import Header
+from src.statement_skeleton.elements.Title import Title
+from src.statement_skeleton.elements.Total import Total
+
 
 class Skeleton:
     subclasses: list[str] = [
+        "Account",
         "Divider",
         "Header",
         "Title",
-        "Account"
+        "Total"
     ]
 
     months: dict[str:str] = {
@@ -29,7 +36,7 @@ class Skeleton:
     }
 
     def __init__(self, fnstmt: dict[str:dict[str:dict[str:any]]], company: str, fs_name: str, date: str,
-                 min_width: int = 50, margin: int = 2, indent: int = 4) -> None:
+                 min_width: int = 50, margin: int = 2, indent: int = 4, decimals: bool = True) -> None:
         """
         :param company: The name of the company.
         :param fs_name: The name of the financial statement.
@@ -47,6 +54,7 @@ class Skeleton:
         self.min_width: int = min_width
         self.margin: int = margin
         self.indent: int = indent
+        self.decimals: bool = decimals
         self.calc_width: int = -1
 
         # In order to properly format the width, we need to know the longest string used, so we know how wide to make
@@ -67,6 +75,8 @@ class Skeleton:
             for category, accounts in self.fnstmt.items():
                 for account, attributes in accounts.items():
                     self.add_title(account)
+
+        self.define_output()
 
     def _calc_width(self) -> None:
         """
@@ -101,6 +111,44 @@ class Skeleton:
             raise KeyError(f"{type(element).__name__} isn't a valid element.")
 
         self.implemented_elements.append(element)
+
+    def define_output(self) -> None:
+        """
+        Defines the output. This is done in its own method, so it can be overridden.
+        :return: Nothing.
+        """
+        self.implement(Divider(self, True))
+        self.implement(Header(self, "company"))
+        self.implement(Divider(self, False))
+        self.implement(Header(self, "fs"))
+        self.implement(Divider(self, False))
+        self.implement(Header(self, "date"))
+        self.implement(Divider(self, False))
+
+        # The formatting below is pretty general and doesn't contain any subtotal lines for specific things, such as
+        # a total line for current assets and current liabilities. These should be taken care of in the subclasses.
+        for category, accounts in self.fnstmt.items():
+            self.implement(Title(self, (category.lower()).capitalize()))
+
+            total_bal: float | int = 0.0
+
+            for account, attributes in accounts.items():
+
+                if attributes["d/c"] == "debit":
+                    total_bal += attributes["bal"]
+
+                else:
+                    total_bal -= attributes["bal"]
+
+                self.implement(Account(self, account, attributes["bal"]))
+
+            self.implement(Total(
+                self,
+                f"Total {(category.lower()).capitalize()}",
+                abs(total_bal)
+            ))
+
+            self.implement(Divider(self, False))
 
     def print_output(self) -> None:
         for element in self.implemented_elements:
