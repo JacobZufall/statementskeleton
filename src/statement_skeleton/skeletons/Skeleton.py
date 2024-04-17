@@ -4,13 +4,20 @@ Skeleton.py
 
 from typing import Any
 
+from src.statement_skeleton.elements.Account import Account
+from src.statement_skeleton.elements.Divider import Divider
+from src.statement_skeleton.elements.Header import Header
+from src.statement_skeleton.elements.Title import Title
+from src.statement_skeleton.elements.Total import Total
+
 
 class Skeleton:
     subclasses: list[str] = [
+        "Account",
         "Divider",
         "Header",
         "Title",
-        "Account"
+        "Total"
     ]
 
     months: dict[str:str] = {
@@ -29,7 +36,7 @@ class Skeleton:
     }
 
     def __init__(self, fnstmt: dict[str:dict[str:dict[str:any]]], company: str, fs_name: str, date: str,
-                 min_width: int = 50, margin: int = 2, indent: int = 4) -> None:
+                 min_width: int = 50, margin: int = 2, indent: int = 4, decimals: bool = True) -> None:
         """
         :param company: The name of the company.
         :param fs_name: The name of the financial statement.
@@ -47,6 +54,7 @@ class Skeleton:
         self.min_width: int = min_width
         self.margin: int = margin
         self.indent: int = indent
+        self.decimals: bool = decimals
         self.calc_width: int = -1
 
         # In order to properly format the width, we need to know the longest string used, so we know how wide to make
@@ -67,6 +75,37 @@ class Skeleton:
             for category, accounts in self.fnstmt.items():
                 for account, attributes in accounts.items():
                     self.add_title(account)
+
+        self.implement(Divider(self, True))
+        self.implement(Header(self, "company"))
+        self.implement(Divider(self, False))
+        self.implement(Header(self, "fs"))
+        self.implement(Divider(self, False))
+        self.implement(Header(self, "date"))
+        self.implement(Divider(self, False))
+
+        for category, accounts in self.fnstmt.items():
+            self.implement(Title(self, (category.lower()).capitalize()))
+
+            total_bal: float | int = 0.0
+
+            for account, attributes in accounts.items():
+
+                if attributes["d/c"] == "debit":
+                    total_bal += attributes["bal"]
+
+                else:
+                    total_bal -= attributes["bal"]
+
+                self.implement(Account(self, account, attributes["bal"]))
+
+            self.implement(Total(
+                self,
+                f"Total {(category.lower()).capitalize()}",
+                abs(total_bal)
+            ))
+
+            self.implement(Divider(self, False))
 
     def _calc_width(self) -> None:
         """
