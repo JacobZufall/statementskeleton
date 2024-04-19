@@ -2,20 +2,16 @@
 Divider.py
 """
 
-from typing import override, Any
+from typing import Any
+
+from .Element import Element
 
 
-class Divider:
+class Divider(Element):
     def __init__(self, skeleton_obj: Any, border: bool = False) -> None:
-        self.skel: Any = skeleton_obj
-
-        self.output: str = ""
+        super().__init__(skeleton_obj)
 
         if border:
             self.output = f"+{"-" * (self.skel.calc_width + self.skel.margin)}+"
         else:
             self.output = f"|{"-" * (self.skel.calc_width + self.skel.margin)}|"
-
-    @override
-    def __str__(self) -> str:
-        return self.output
