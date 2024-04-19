@@ -9,6 +9,16 @@ from .Element import Element
 
 class Header(Element):
     def __init__(self, skeleton_obj: Any, header_type: str, header_name: str = "") -> None:
+        """
+        Displays information centered in the middle of the financial statement:\n
+        "company" = Displays the name of the company.\n
+        "fs" = Displays the name of the financial statement.\n
+        "date" = Displays the name of the date.\n
+        Any other input will display the custom header name.
+        :param skeleton_obj: The skeleton to implement the element into.
+        :param header_type: The information for the header to display taken from Skeleton.
+        :param header_name: If using a custom header, the customer information for the header to display.
+        """
         super().__init__(skeleton_obj)
 
         self.header_name: str = ""

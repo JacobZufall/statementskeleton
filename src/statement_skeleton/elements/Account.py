@@ -9,9 +9,15 @@ from .Element import Element
 
 class Account(Element):
     def __init__(self, skeleton_obj: Any, account_name: str, account_bal: float | int) -> None:
+        """
+        Adds an individual account and its balance to the skeleton.
+        :param skeleton_obj: The skeleton to implement the element into.
+        :param account_name: The name of the account to display.
+        :param account_bal: The balance of the account to display.
+        """
         super().__init__(skeleton_obj)
-        self.space_needed: int = 0
 
+        self.space_needed: int = 0
         self.account_bal: float | int = 0.0
         self.fdecimal: str = ""
 
