@@ -77,7 +77,8 @@ class Skeleton:
                 for account, attributes in accounts.items():
                     self.add_title(account)
 
-        self.define_output()
+        self.define_header()
+        self.define_body()
 
     def _calc_width(self) -> None:
         """
@@ -144,13 +145,15 @@ class Skeleton:
         else:
             raise KeyError(f"No element with a key of {key} was found.")
 
-    def define_output(self) -> None:
+    # The reason define_header() and define_body() are separate methods is so that you can easily override one without
+    # affecting the other. The body for this class is extremely generic, and may not be what people want their output
+    # to look like. However, the header is usually pretty consistent across most financial statements.
+    def define_header(self) -> None:
         """
-        Defines the output. This is done in its own method, so it can be overridden.
+        Defines the header of the financial statement with stuff such as company information. This will always be
+        printed before the body.
         :return: Nothing.
         """
-        # Might need to split this off into a separate method that is then called here so that subclasses can inherit
-        # the heading easily without inheriting the body.
         self.implement(Divider(self, True), "div_top")
         self.implement(Header(self, "company"), "head_company")
         self.implement(Divider(self, False), "div_1")
@@ -159,6 +162,12 @@ class Skeleton:
         self.implement(Header(self, "date"), "head_date")
         self.implement(Divider(self, False), "div_3")
 
+    def define_body(self) -> None:
+        """
+        Defines the body of the financial statement with stuff such as accounts and totals. This will always be printed
+        after the header.
+        :return: Nothing
+        """
         # This is important to determine the bottom-most divider.
         next_div_num: int = 4
 

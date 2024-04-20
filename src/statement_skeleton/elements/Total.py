@@ -22,7 +22,7 @@ class Total(Account):
 
         if self.skel.decimals:
             self.total_bal = float(round(total_bal, 2))
-            self.fdecimal = ".2f"
+            self.fdecimal = ",.2f"
 
         else:
             self.total_bal = int(round(total_bal))

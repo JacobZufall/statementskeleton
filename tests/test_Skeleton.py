@@ -4,11 +4,16 @@ test_Skeleton.py
 
 from src.statement_skeleton.skeletons.Skeleton import Skeleton
 
-test_fs: dict[str:dict[str:dict[str:any]]] = {
+test_fs: dict[str:dict[str:dict[str:str | float]]] = {
     "Assets": {
         "Cash": {
             "d/c": "debit",
-            "bal": 400.00,
+            "bal": 400.0,
+            "term": "current"
+        },
+        "Accounts Receivable": {
+            "d/c": "debit",
+            "bal": 1_000.0,
             "term": "current"
         }
     },
@@ -16,7 +21,7 @@ test_fs: dict[str:dict[str:dict[str:any]]] = {
     "Liabilities": {
         "Accounts Payable": {
             "d/c": "credit",
-            "bal": 200.00,
+            "bal": 200.0,
             "term": "current"
         }
     },
@@ -24,7 +29,11 @@ test_fs: dict[str:dict[str:dict[str:any]]] = {
     "Stockholders' Equity": {
         "Common Stock": {
             "d/c": "credit",
-            "bal": 200.00
+            "bal": 200.0
+        },
+        "Retained Earnings": {
+            "d/c": "credit",
+            "bal": 1_000_000_000_000_000.0
         }
     }
 }
