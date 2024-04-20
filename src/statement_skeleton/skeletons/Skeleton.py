@@ -210,6 +210,5 @@ class Skeleton:
         Prints the skeleton.
         :return: Nothing.
         """
-        print(self.implemented_elements)
         for implement in self.implemented_elements:
             print(implement[0])
