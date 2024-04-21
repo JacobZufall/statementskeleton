@@ -34,10 +34,10 @@ class Header(Element):
 
         else:
             # Allows a custom header title with proper formatting.
-            self.skel.add_title(header_name)
+            self.skel.add_text(header_name)
             self.header_name = header_name
 
-        self.space_needed: int = (self.skel.calc_width + self.skel.margin - len(self.header_name))
+        self.space_needed: int = (self.skel.calcd_width + self.skel.margin - len(self.header_name))
         self.l_space_needed: int = 0
         self.r_space_needed: int = 0
 

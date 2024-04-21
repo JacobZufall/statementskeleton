@@ -7,9 +7,6 @@ from typing import Any
 from .Element import Element
 
 
-# TODO: The string length of account_bal is not factored in to the width of the financial statement, so it starts to
-#  look messy when the numbers get too large. Need to have a "minimum distance" between the account title and the number
-#  so that this doesn't happen.
 class Account(Element):
     def __init__(self, skeleton_obj: Any, account_name: str, account_bal: float | int) -> None:
         """
@@ -40,10 +37,10 @@ class Account(Element):
         if bal_len > 3:
             self.space_needed -= ((bal_len - 1) // 3)
 
-        self.space_needed += (self.skel.calc_width - len(account_name) + self.skel.margin - self.skel.indent -
+        self.space_needed += (self.skel.calcd_width - len(account_name) + self.skel.margin - self.skel.indent -
                               len(str(self.account_bal)))
 
-        self.output: str = (
-            f"|{" " * self.skel.indent}{account_name}{"·" * (self.space_needed - 1)}{self.account_bal:{self.fdecimal}}"
-            f"{" "}|"
-        )
+        self.space_needed = max(self.space_needed, self.skel.column_space)
+
+        self.output: str = (f"|{" " * self.skel.indent}{account_name}{"·" * (self.space_needed - 1)}"
+                            f"{self.account_bal:{self.fdecimal}}{" "}|")

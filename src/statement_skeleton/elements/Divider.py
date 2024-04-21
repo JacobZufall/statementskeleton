@@ -17,6 +17,6 @@ class Divider(Element):
         super().__init__(skeleton_obj)
 
         if border:
-            self.output = f"+{"-" * (self.skel.calc_width + self.skel.margin)}+"
+            self.output = f"+{"-" * (self.skel.calcd_width + self.skel.margin)}+"
         else:
-            self.output = f"|{"-" * (self.skel.calc_width + self.skel.margin)}|"
+            self.output = f"|{"-" * (self.skel.calcd_width + self.skel.margin)}|"

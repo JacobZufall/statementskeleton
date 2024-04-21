@@ -36,7 +36,8 @@ class Skeleton:
     }
 
     def __init__(self, fnstmt: dict[str:dict[str:dict[str:any]]], company: str, fs_name: str, date: str,
-                 min_width: int = 50, margin: int = 2, indent: int = 4, decimals: bool = True) -> None:
+                 min_width: int = 50, margin: int = 2, indent: int = 4, column_space: int = 20,
+                 decimals: bool = True) -> None:
         """
         Creates a skeleton to add elements into in order to neatly display a financial statement in the console.
         :param company: The name of the company.
@@ -45,6 +46,7 @@ class Skeleton:
         :param fnstmt: The financial statement.
         :param min_width: The minimum width the financial statement will be in the output.
         :param margin: How many spaces are on each side of headers.
+        :param column_space: The minimum space between the account name and its balance.
         :param indent: How many spaces are between an account name and the side.
         """
         self.company: str = company
@@ -55,27 +57,42 @@ class Skeleton:
         self.min_width: int = min_width
         self.margin: int = margin
         self.indent: int = indent
+        self.column_space: int = column_space
         self.decimals: bool = decimals
-        self.calc_width: int = -1
+
+        self.calcd_width: int = -1
 
         # In order to properly format the width, we need to know the longest string used, so we know how wide to make
         # the table.
-        self.titles: list[str] = []
+        self.texts: list[str] = []
         self.implemented_elements: list[list[str]] = []
 
         if self.company is not None:
-            self.add_title(self.company)
+            self.add_text(self.company)
 
         if self.fs_name is not None:
-            self.add_title(self.fs_name)
+            self.add_text(self.fs_name)
 
         if self.f_date is not None:
-            self.add_title(self.f_date)
+            self.add_text(self.f_date)
 
+        # This adds the account information in so that it's factored.
         if self.fnstmt is not None:
             for category, accounts in self.fnstmt.items():
+                total_bal: float | int = 0.0
+
                 for account, attributes in accounts.items():
-                    self.add_title(account)
+                    # I don't know if this is the best way to do it, but it needs to add length to the string, since
+                    # a later function will look for the length.
+                    self.add_text(account + ("·" * self.column_space) + f"{attributes["bal"]:,.2f}")
+
+                    if attributes["d/c"] == "debit":
+                        total_bal += attributes["bal"]
+
+                    else:
+                        total_bal -= attributes["bal"]
+
+                self.add_text(f"Total {category + (" " * self.column_space)}{abs(total_bal):,.2f}")
 
         self.define_header()
         self.define_body()
@@ -85,12 +102,12 @@ class Skeleton:
         Calculates the width the output will be.
         :return: Nothing.
         """
-        for title in self.titles:
-            if len(title) > self.calc_width:
-                self.calc_width = len(title)
+        for text in self.texts:
+            if len(text) > self.calcd_width:
+                self.calcd_width = len(text)
 
-            if self.calc_width < self.min_width:
-                self.calc_width = self.min_width
+            if self.calcd_width < self.min_width:
+                self.calcd_width = self.min_width
 
     def _format_date(self, date: str) -> str:
         """
@@ -101,15 +118,15 @@ class Skeleton:
         split_date: list[str] = date.split("/")
         return f"For year ended {self.months[split_date[0]]} {split_date[1]}, {split_date[2]}"
 
-    def add_title(self, title: str) -> None:
+    def add_text(self, text: str) -> None:
         """
-        Adds a title into a list that's used to calculate the width of the output. This method checks for redundancy
+        Adds text into a list that's used to calculate the width of the output. This method checks for redundancy
         and recalculates the width of the output automatically.
-        :param title: The title to add/append.
+        :param text: The text to add/append.
         :return: Nothing.
         """
-        if title not in self.titles:
-            self.titles.append(title)
+        if text not in self.texts:
+            self.texts.append(text)
 
         self._calc_width()
 
@@ -192,7 +209,7 @@ class Skeleton:
 
             self.implement(Total(
                 self,
-                f"Total {(category.lower()).capitalize()}",
+                (category.lower()).capitalize(),
                 abs(total_bal)
             ),
                 f"total_{category.lower()}"
@@ -210,5 +227,6 @@ class Skeleton:
         Prints the skeleton.
         :return: Nothing.
         """
+        print(self.texts)
         for implement in self.implemented_elements:
             print(implement[0])

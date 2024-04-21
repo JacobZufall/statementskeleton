@@ -16,5 +16,5 @@ class Title(Element):
         """
         super().__init__(skeleton_obj)
 
-        self.space_needed: int = (self.skel.calc_width + self.skel.margin - len(title_name))
+        self.space_needed: int = (self.skel.calcd_width + self.skel.margin - len(title_name))
         self.output = f"| {title_name}{" " * (self.space_needed - 1)}|"

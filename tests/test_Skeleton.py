@@ -29,16 +29,16 @@ test_fs: dict[str:dict[str:dict[str:str | float]]] = {
     "Stockholders' Equity": {
         "Common Stock": {
             "d/c": "credit",
-            "bal": 200.0
+            "bal": 200
         },
         "Retained Earnings": {
             "d/c": "credit",
-            "bal": 1_000_000_000_000_000000000000.0
+            "bal": 10000000000000
         }
     }
 }
 
 test_skeleton: Skeleton = Skeleton(test_fs, "Test Company", "Financial Statement",
-                                   "12/31/20XX", decimals=True)
+                                   "12/31/20XX", decimals=False)
 
 test_skeleton.print_output()
