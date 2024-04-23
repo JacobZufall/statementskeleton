@@ -33,7 +33,7 @@ test_fs: dict[str:dict[str:dict[str:str | float]]] = {
         },
         "Retained Earnings": {
             "d/c": "credit",
-            "bal": 10000000000000
+            "bal": 100000
         }
     }
 }

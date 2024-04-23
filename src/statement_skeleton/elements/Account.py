@@ -17,30 +17,21 @@ class Account(Element):
         """
         super().__init__(skeleton_obj)
 
-        self.space_needed: int = 0
+        self.central_spacer: int = -1
         self.account_bal: float | int = 0.0
         self.fdecimal: str = ","
 
         if self.skel.decimals:
             self.account_bal = float(round(account_bal, 2))
             self.fdecimal = ",.2f"
-            self.space_needed -= 1
 
         else:
             self.account_bal = int(round(account_bal))
 
-        # This looks horrible, but the reason for it is we need to factor in the comma into self.space_needed, so that
-        # it's formatted correctly. The reason it's cast to an integer is so that it doesn't count the decimals in
-        # determining how many commas will be needed.
-        bal_len: int = len(str(int(self.account_bal)))
+        self.central_spacer += (self.skel.calcd_width - len(account_name) + self.skel.margin - self.skel.indent -
+                                len(f"{self.account_bal:{self.fdecimal}}"))
 
-        if bal_len > 3:
-            self.space_needed -= ((bal_len - 1) // 3)
+        self.central_spacer = max(self.central_spacer, self.skel.column_space)
 
-        self.space_needed += (self.skel.calcd_width - len(account_name) + self.skel.margin - self.skel.indent -
-                              len(str(self.account_bal)))
-
-        self.space_needed = max(self.space_needed, self.skel.column_space)
-
-        self.output: str = (f"|{" " * self.skel.indent}{account_name}{"·" * (self.space_needed - 1)}"
+        self.output: str = (f"|{" " * self.skel.indent}{account_name}{"·" * self.central_spacer}"
                             f"{self.account_bal:{self.fdecimal}}{" "}|")

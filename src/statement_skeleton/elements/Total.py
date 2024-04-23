@@ -29,6 +29,6 @@ class Total(Account):
 
         # I have no idea why I need to subtract 2 here, but I do. This whole self.space_needed calculation has gotten
         # super messy.
-        self.space_needed -= 2
-        self.space_needed = max(self.space_needed, self.skel.column_space)
-        self.output: str = f"| Total {total_name}{" " * (self.space_needed - 2)}{self.total_bal:{self.fdecimal}}{" "}|"
+        self.central_spacer -= 2
+        self.central_spacer = max(self.central_spacer, self.skel.column_space)
+        self.output: str = f"| Total {total_name}{" " * (self.central_spacer - 1)}{self.total_bal:{self.fdecimal}}{" "}|"
