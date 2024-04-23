@@ -1,5 +1,9 @@
 """
 Skeleton.py
+
+In the future I may plan on adding subclasses of Skeleton that are for specific financial statements such as a balance
+sheet or an income statement. However, these financial statements vary so much it may be a waste to do so. However,
+I've added the Subtotal class so that people can easily make these other financial statements.
 """
 
 from typing import Any
