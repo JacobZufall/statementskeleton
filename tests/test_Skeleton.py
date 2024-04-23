@@ -1,5 +1,7 @@
 """
 test_Skeleton.py
+
+The only thing this file is for is to make sure the output looks correct. It won't verify anything else.
 """
 
 from src.statement_skeleton.skeletons.Skeleton import Skeleton
@@ -11,6 +13,7 @@ test_fs: dict[str:dict[str:dict[str:str | float]]] = {
             "bal": 400.0,
             "term": "current"
         },
+
         "Accounts Receivable": {
             "d/c": "debit",
             "bal": 1_000.0,
@@ -31,9 +34,10 @@ test_fs: dict[str:dict[str:dict[str:str | float]]] = {
             "d/c": "credit",
             "bal": 200
         },
+
         "Retained Earnings": {
             "d/c": "credit",
-            "bal": 100000
+            "bal": 1000
         }
     }
 }

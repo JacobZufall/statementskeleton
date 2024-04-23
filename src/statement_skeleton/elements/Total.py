@@ -18,17 +18,9 @@ class Total(Account):
         """
         super().__init__(skeleton_obj, total_name, total_bal)
 
-        self.total_bal: float | int = 0.0
-
-        if self.skel.decimals:
-            self.total_bal = float(round(total_bal, 2))
-            self.fdecimal = ",.2f"
-
-        else:
-            self.total_bal = int(round(total_bal))
-
         # I have no idea why I need to subtract 2 here, but I do. This whole self.space_needed calculation has gotten
         # super messy.
         self.central_spacer -= 2
         self.central_spacer = max(self.central_spacer, self.skel.column_space)
-        self.output: str = f"| Total {total_name}{" " * (self.central_spacer - 1)}{self.total_bal:{self.fdecimal}}{" "}|"
+        self.output: str = (f"| Total {total_name}{" " * (self.central_spacer - 1)}{self.account_bal:{self.fdecimal}}"
+                            f"{" "}|")

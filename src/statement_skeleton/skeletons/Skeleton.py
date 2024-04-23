@@ -5,7 +5,6 @@ In the future I may plan on adding subclasses of Skeleton that are for specific 
 sheet or an income statement. However, these financial statements vary so much it may be a waste to do so. However,
 I've added the Subtotal class so that people can easily make these other financial statements.
 """
-
 from typing import Any
 
 from src.statement_skeleton.elements.Account import Account
@@ -20,6 +19,8 @@ class Skeleton:
         "Account",
         "Divider",
         "Header",
+        "Spacer",
+        "Subtotal",
         "Title",
         "Total"
     ]
@@ -231,6 +232,5 @@ class Skeleton:
         Prints the skeleton.
         :return: Nothing.
         """
-        print(self.texts)
         for implement in self.implemented_elements:
             print(implement[0])
