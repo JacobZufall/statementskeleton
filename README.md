@@ -7,7 +7,7 @@ to be used with PyActy, but it can be used by itself.
 ### Skeleton
 This is the main class and all other elements are nested inside of it. You can create a Skeleton like so:
 ```py
-from statement_skeleton import Skeleton
+from statementskeleton import Skeleton
 
 skel: Skeleton = Skeleton()
 ```
@@ -60,7 +60,7 @@ If it isn't formatted like this, it won't work.
 
 Using all the information above, we can complete the creation of our Skeleton object:
 ```py
-from statement_skeleton import Skeleton
+from statementskeleton import Skeleton
 
 skel: Skeleton = Skeleton(financial_statement, "Company Name", "Financial Statement", "12/31/2024", decimals=False)
 
@@ -71,7 +71,7 @@ skel.print_output()
 ### Account
 This class adds an account to the `Skeleton` that contains a name and a balance. You can add it to the `Skeleton` like so:
 ```py
-from statement_skeleton import Skeleton, Account
+from statementskeleton import Skeleton, Account
 
 skel: Skeleton = Skeleton(financial_statement, "Company Name", "Financial Statement", "12/31/2024", decimals=False)
 

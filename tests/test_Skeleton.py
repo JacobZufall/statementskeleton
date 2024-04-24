@@ -4,7 +4,7 @@ test_Skeleton.py
 The only thing this file is for is to make sure the output looks correct. It won't verify anything else.
 """
 
-from src.statement_skeleton.skeletons.Skeleton import Skeleton
+from src.statementskeleton.skeletons.Skeleton import Skeleton
 
 test_fs: dict[str:dict[str:dict[str:str | float]]] = {
     "Assets": {

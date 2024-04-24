@@ -7,11 +7,11 @@ I've added the Subtotal class so that people can easily make these other financi
 """
 from typing import Any
 
-from src.statement_skeleton.elements.Account import Account
-from src.statement_skeleton.elements.Divider import Divider
-from src.statement_skeleton.elements.Header import Header
-from src.statement_skeleton.elements.Title import Title
-from src.statement_skeleton.elements.Total import Total
+from src.statementskeleton.elements.Account import Account
+from src.statementskeleton.elements.Divider import Divider
+from src.statementskeleton.elements.Header import Header
+from src.statementskeleton.elements.Title import Title
+from src.statementskeleton.elements.Total import Total
 
 
 class Skeleton:
