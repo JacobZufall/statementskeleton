@@ -51,7 +51,7 @@ financial_statement: dict[str:dict[str:dict[str:str | float]]] = {
 
         "Retained Earnings": {
             "d/c": "credit",
-            "bal": 1000
+            "bal": 1_000
         }
     }
 }
@@ -69,6 +69,22 @@ skel.print_output()
 ```
 
 ### Account
+This class adds an account to the `Skeleton` that contains a name and a balance. You can add it to the `Skeleton` like so:
+```py
+from statement_skeleton import Skeleton, Account
+
+skel: Skeleton = Skeleton(financial_statement, "Company Name", "Financial Statement", "12/31/2024", decimals=False)
+
+skel.implement(Account(skel, "Cash", 400), "cash_account")
+```
+The `implement()` method has two arguments. The first is the actual element you're implementing, and the second is a 
+unique ID for that element so that it can be modified later if needed.
+
+When implementing an element, the first argument of the object must be the `Skeleton` object you are implementing the
+element to. This applies to EVERY element.
+
+It's recommended to make a new class that inherits `Skeleton` and override the `define_header()` and `define_body()` 
+methods, but this will be covered in a later section.
 
 ### Divider
 
