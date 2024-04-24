@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "statementskeleton"
-version = "1.1"
+version = "1.2"
 authors = [
     {name="Jacob Zufall", email="jacobzufall@gmail.com"}
 ]
