@@ -3,12 +3,12 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "statement_skeleton"
+name = "statementskeleton"
 version = "1.0"
 authors = [
     {name="Jacob Zufall", email="jacobzufall@gmail.com"}
 ]
-description = ""
+description = "A package for formatting financial statements in the console. Designed for PyActy."
 readme = "README.md"
 requires-python= ">3.11"
 dependencies = []
@@ -19,5 +19,5 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = ""
-Issues = ""
+Homepage = "https://github.com/JacobZufall/statementskeleton"
+Issues = "https://github.com/JacobZufall/statementskeleton/issues"
