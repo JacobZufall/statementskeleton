@@ -7,11 +7,11 @@ I've added the Subtotal class so that people can easily make these other financi
 """
 from typing import Any
 
-from src.statementskeleton.elements.Account import Account
-from src.statementskeleton.elements.Divider import Divider
-from src.statementskeleton.elements.Header import Header
-from src.statementskeleton.elements.Title import Title
-from src.statementskeleton.elements.Total import Total
+from ..elements.Account import Account
+from ..elements.Divider import Divider
+from ..elements.Header import Header
+from ..elements.Title import Title
+from ..elements.Total import Total
 
 
 class Skeleton:
@@ -151,7 +151,7 @@ class Skeleton:
                 raise KeyError(f"There is already an element with the key {key}.")
 
         else:
-            self.implemented_elements.append([element, key])
+            self.implemented_elements.append([element.output, key])
 
     def annul(self, key: str) -> None:
         """
@@ -234,3 +234,18 @@ class Skeleton:
         """
         for implement in self.implemented_elements:
             print(implement[0])
+
+    def return_output(self) -> str:
+        """
+        Converts the entire skeleton into a single string.
+        :return: The output of the skeleton.
+        """
+        output: str = ""
+
+        for implement in self.implemented_elements:
+            output += implement[0]
+            # We want this character on every line EXCEPT the last one, so that's what this does.
+            if self.implemented_elements.index(implement) != (len(self.implemented_elements) - 1):
+                output += "\n"
+
+        return output

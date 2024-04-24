@@ -46,3 +46,4 @@ test_skeleton: Skeleton = Skeleton(test_fs, "Test Company", "Financial Statement
                                    "12/31/20XX", decimals=False)
 
 test_skeleton.print_output()
+print(test_skeleton.return_output())
