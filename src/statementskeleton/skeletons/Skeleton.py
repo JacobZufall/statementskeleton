@@ -212,11 +212,13 @@ class Skeleton:
                 self.implement(Account(self, account, attributes["bal"]),
                                f"account_{account.lower()}")
 
-            self.implement(Total(
-                self,
-                (category.lower()).capitalize(),
-                abs(total_bal)
-            ),
+            self.implement(
+                Total(
+                    self,
+                    (category.lower()).capitalize(),
+                    abs(total_bal)
+                ),
+
                 f"total_{category.lower()}"
             )
 
